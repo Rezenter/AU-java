@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+
 public class Function{
     final static long MOD = (long) Math.pow(2, 32);
 
