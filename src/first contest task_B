@@ -1,0 +1,53 @@
+package Task_B;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Scanner;
+
+
+
+public class task_B {
+    static long CNT = (long) Math.pow(2, 32);
+    static HashMap<Long, Long> mt = new HashMap<Long, Long>();
+
+    static long fun(long n)
+    {
+        if (n <= 2)
+            return 1L;
+        else if ((n % 2) == 1)
+        {
+            if (mt.get(n) !=  null)
+                return mt.get(n);
+            else
+            {
+                mt.put(n, (fun((long) (6 * n / 7)) + fun((long) (2 * n / 3))) %CNT);
+                return mt.get(n);
+            }
+        }
+        else
+        {
+            if (mt.get(n) != null)
+                return mt.get(n);
+            else
+            {
+                mt.put(n, (fun(n - 1) % CNT + fun(n - 3) % CNT) % CNT);
+                return mt.get(n);
+            }
+        }
+    }
+
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new FileReader("function.in"));
+        PrintWriter out = new PrintWriter("function.out");
+
+        long n = in.nextLong();
+
+        out.print(fun(n));
+
+        in.close();
+        out.close();
+    }
+}
