@@ -9,46 +9,91 @@ import java.io.File;
 
 public class Dict {
 
-    static Node head;
-    static Node tail;
+    static Node head = new Node("", 0 , null);
 
     public static void main(String[] args) throws FileNotFoundException{
         Scanner in = new Scanner(new File("dict.in"));
-        long x = (long)in.nextInt();
+        String text = "";
+        while(in.hasNextLine()){
+            text += in.nextLine();
+            text += " ";
+        }
         in.close();
-        Node head;
-        Node tail;
+        parse(text);
+        Node curr = head;
+        while(curr.getNext() != null){
+            System.out.println(curr);
+            curr = curr.getNext();
+        }
+        System.out.println(curr);
+
         PrintWriter pw = new PrintWriter(new File("dict.out"));
         pw.print(0);
         pw.close();
     }
 
+    public static void parse(String text){
+        String curr = "";
+
+    }
+
     public static void push(String newWord){
-        if(head.getNext() == null){
+        if(head.getWord() == ""){
             head = new Node(newWord, 1, null);
         }else{
-            Node curr = head;
-            Node prev = null;
-            while(curr.getNext() != null){
-                if(newWord.equalsIgnoreCase(curr.getWord())){
-                    //smth needed here
-                    break;
+            if(head.getWord().equalsIgnoreCase(newWord)){
+                head.addCount();
+            }else{
+                Node curr = head;
+                boolean flag = true;
+                while (true) {
+                    if (newWord.equalsIgnoreCase(curr.getWord())) {
+                        curr.addCount();
+                        flag = false;
+                        break;
+                    }
+                    if(curr.getNext() == null){
+                        break;
+                    }
+                    curr = curr.getNext();
                 }
-                prev = curr;
+                if(flag) {
+                    sortedInsertion(new Node(newWord.toLowerCase(), 1, null));
+                }
             }
-            curr.setNext(new Node(newWord.toLowerCase(), 1, null));
+        }
+    }
+
+    public static void sortedInsertion(Node newWord){
+        Node curr = head;
+        Node prev = head;
+        if(head.compare(newWord) > 0){
+            Node tmp = head;
+            head = newWord;
+            head.setNext(tmp);
+        }else {
+            while (curr.getNext() != null && curr.compare(newWord) < 0) {
+                prev = curr;
+                curr = curr.getNext();
+            }
+            newWord.setNext(curr);
+            prev.setNext(newWord);
         }
     }
 
     public static class Node{
-        private String word = null;
-        private int count = 0;
-        private Node next = null;
+        private String word;
+        private int count;
+        private Node next;
 
         Node(String w, int c, Node n){
             word = w;
             count = c;
             next = n;
+        }
+
+        public String toString(){
+            return "Word: " + word + " Count = " + count;
         }
 
         public int getCount(){
