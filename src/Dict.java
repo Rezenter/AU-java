@@ -23,9 +23,12 @@ public class Dict {
                  dict.push(new Node(arr[i], 1, null, null, 0));
             }
         }
-
+        text = dict.toString();
+        if(text.charAt(text.length()-1) == '\n'){
+            text = text.substring(0,text.length() - 1);
+        }
         PrintWriter pw = new PrintWriter(new File("dict.out"));
-        pw.print(dict);
+        pw.print(text);
         pw.close();
     }
 
