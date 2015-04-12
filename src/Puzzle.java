@@ -21,7 +21,7 @@ public class Puzzle {
 
         int[] defaults = new int[n];
         for(int i = 0; i < n; i++){
-            defaults[i] = in.nextInt();
+            defaults[i] = -in.nextInt();
         }
         in.close();
         int[] solvation = solve(matrix.getMat(), defaults);
@@ -29,15 +29,21 @@ public class Puzzle {
         if(solvation[0] == -2){
             res = "-11";
         }else {
-            res += solvation.length + "\n";
-            for (int i = 0; i < n; i++) {
+            int count = 0;
+            for(int i = 0; i < solvation.length; i++){
+                if(Math.abs(solvation[i])%2 == 1){
+                    count ++;
+                }
+            }
+            res += count + "\n";
+            for (int i = 0; i < solvation.length; i++) {
                 if(Math.abs(solvation[i])%2 == 1){
                     res += i+1 + " ";
                 }
             }
         }
         PrintWriter pw = new PrintWriter(new File("puzzle.out"));
-        pw.print(res.substring(0, res.length() - 1) + "\n");
+        pw.print(res.substring(0, res.length() - 1));
         pw.close();
     }
 
