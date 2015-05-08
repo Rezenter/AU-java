@@ -1,6 +1,6 @@
 /**
  * Created by Rezenter on 24.04.2015.
- * fails test 30
+ * WORKS
  */
 
 import java.io.FileNotFoundException;
@@ -151,8 +151,8 @@ public class Linear {
             int res = column;
             double max = 0;
             for (int i = column; i < height; i++) {
-                if (mat[i][column] > max) {
-                    max = mat[i][column];
+                if (Math.abs(mat[i][column]) > max) {
+                    max = Math.abs(mat[i][column]);
                     res = i;
                 }
             }
