@@ -7,11 +7,11 @@ import java.io.PrintWriter;
 
 
 public class Function{
-    final static long MOD = (long) Math.pow(2, 32);
+    final static double MOD = (double) Math.pow(2, 32);
 
     public static void main(String[] args) throws FileNotFoundException{
         Scanner in = new Scanner(new File("function.in"));
-        long x = (long)in.nextInt();
+        double x = (double)in.nextInt();
         in.close();
 
         PrintWriter pw = new PrintWriter(new File("function.out"));
@@ -19,14 +19,14 @@ public class Function{
         pw.close();
     }
 
-    static Map<Long, Long> done = new HashMap<Long, Long>();
+    static Map<Double, Double> done = new HashMap<Double, Double>();
 
-    public static long func(long x){
+    public static double func(double x){
         if(done.containsKey(x)){
             return done.get(x);
         }
         if(x <= 2){
-            done.put(x, (long) 1);
+            done.put(x, (double) 1);
         }else{
             if(x % 2 == 1){
                 done.put(x, (func(6 * x / 7)%MOD + func(2 * x / 3)%MOD)%MOD);
